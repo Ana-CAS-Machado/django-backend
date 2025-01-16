@@ -11,4 +11,5 @@ services:
       - ./db:/app/db
     environment:
       - DJANGO_SETTINGS_MODULE=backend.settings
+      - SUPERUSER_SECURITY_KEY=mysecretkey
     restart: always
