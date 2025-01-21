@@ -10,4 +10,4 @@ class FormSubmission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.nome} ({self.cpf})"
+        return f"{self.nome}"

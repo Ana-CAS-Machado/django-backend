@@ -24,7 +24,8 @@ class FormSubmissionSerializer(serializers.ModelSerializer):
         return value
 
     def validate_comprovante(self, value):
-        # Verifica se o arquivo é do tipo PDF
-        if value and not value.name.endswith('.pdf'):
-            raise serializers.ValidationError("O arquivo deve ser no formato PDF.")
+        if value:
+            allowed_extensions = ['.pdf', '.doc', '.docx']
+            if not any(value.name.endswith(ext) for ext in allowed_extensions):
+                raise serializers.ValidationError("O arquivo deve ser no formato PDF, DOC ou DOCX.")
         return value

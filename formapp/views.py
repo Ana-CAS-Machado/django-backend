@@ -9,9 +9,13 @@ from django.utils.dateparse import parse_date
 import pandas as pd
 from .models import FormSubmission
 from .serializers import FormSubmissionSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 
 class FormSubmissionView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+
     def post(self, request):
         serializer = FormSubmissionSerializer(data=request.data)
         if serializer.is_valid():
