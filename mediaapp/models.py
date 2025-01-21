@@ -1,23 +1,34 @@
 from django.db import models
 
-# Create your models here.
+class HomePage(models.Model):
+    img_home = models.URLField()
+    data = models.CharField(max_length=100)
+    local = models.CharField(max_length=255)
+    adress = models.CharField(max_length=255)
+    strong_data = models.CharField(max_length=50)
+    strong_local = models.CharField(max_length=50)
+    txt_1 = models.TextField()
+    txt_2 = models.TextField()
+    txt_3 = models.TextField()
 
-class MediaItem(models.Model):
-    CATEGORY_CHOICES = [
-        ('home', 'Página Inicial'),
-        ('form', 'Formulário'),
-        ('schedule', 'Programação'),
-        ('speakers', 'Palestrantes'),
-        ('stream', 'Transmissão'),
-    ]
+class Video(models.Model):
+    title = models.CharField(max_length=100)
+    video = models.URLField()
+    type = models.CharField(max_length=50)
 
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='uploads/', blank=True, null=True)
-    link = models.URLField(blank=True, null=True)
-    text_content = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+class Speaker(models.Model):
+    img = models.URLField(blank=True, null=True)
+    title2 = models.CharField(max_length=100)
+    title4 = models.CharField(max_length=100)
+    title5 = models.CharField(max_length=100)
+    description = models.TextField()
 
-    def __str__(self):
-        return self.title
+class Schedule(models.Model):
+    date = models.CharField(max_length=50)
+
+class Event(models.Model):
+    schedule = models.ForeignKey(Schedule, related_name='events', on_delete=models.CASCADE)
+    horario = models.CharField(max_length=50)
+    eixo = models.CharField(max_length=255)
+    mesa = models.TextField(blank=True, null=True)
+    componente = models.CharField(max_length=255, blank=True, null=True)

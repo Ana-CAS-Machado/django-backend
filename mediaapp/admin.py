@@ -1,10 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import MediaItem
+from .models import HomePage, Video, Speaker, Schedule, Event
 
-@admin.register(MediaItem)
-class MediaItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'created_at')
-    list_filter = ('category',)
-    search_fields = ('title', 'description')
+admin.site.register(HomePage)
+admin.site.register(Video)
+admin.site.register(Speaker)
+admin.site.register(Schedule)
+admin.site.register(Event)

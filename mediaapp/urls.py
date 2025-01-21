@@ -1,12 +1,9 @@
-from django.urls import path, include
-from .views import MediaItemListView, HomeMediaView, FormMediaView, ScheduleMediaView, SpeakersMediaView, StreamMediaView, ImageRetrieveView
+from django.urls import path
+from .views import HomePageView, VideoView, SpeakerView, ScheduleView
 
 urlpatterns = [
-    path('', MediaItemListView.as_view(), name='media-list'),
-    path('home/', HomeMediaView.as_view(), name='media-home'),
-    path('form/', FormMediaView.as_view(), name='media-form'),
-    path('schedule/', ScheduleMediaView.as_view(), name='media-schedule'),
-    path('speakers/', SpeakersMediaView.as_view(), name='media-speakers'),
-    path('stream/', StreamMediaView.as_view(), name='media-stream'),
-    path('media/image/<int:image_id>/', ImageRetrieveView.as_view(), name='image-retrieve'),
+    path('home/', HomePageView.as_view(), name='home-page'),
+    path('videos/', VideoView.as_view(), name='video-list'),
+    path('speakers/', SpeakerView.as_view(), name='speaker-list'),
+    path('schedule/', ScheduleView.as_view(), name='schedule-list'),
 ]

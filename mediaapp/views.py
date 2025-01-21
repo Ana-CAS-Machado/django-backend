@@ -1,59 +1,28 @@
-from django.shortcuts import render
-
-# Create your views here.
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import MediaItem
-from .serializers import MediaItemSerializer
-import os
+from .models import HomePage, Video, Speaker, Schedule
+from .serializers import HomePageSerializer, VideoSerializer, SpeakerSerializer, ScheduleSerializer
 
-
-class ImageRetrieveView(APIView):
-    def get(self, request, *args, **kwargs):
-        image_id = kwargs.get('image_id')
-        media_item = MediaItem.objects.get(id=image_id)
-        
-        file_path = media_item.file.path
-        return FileResponse(open(file_path, 'rb'), content_type='image/jpeg')  # Ajuste conforme o tipo de imagem
-
-
-        
-class MediaItemListView(APIView):
-    def get(self, request, category=None):
-        if category:
-            items = MediaItem.objects.filter(category=category)
-        else:
-            items = MediaItem.objects.all()
-        serializer = MediaItemSerializer(items, many=True)
+class HomePageView(APIView):
+    def get(self, request):
+        homepage_data = HomePage.objects.all()
+        serializer = HomePageSerializer(homepage_data, many=True)
         return Response(serializer.data)
 
-
-class HomeMediaView(APIView):
-    def get(self, request, *args, **kwargs):
-        items = MediaItem.objects.filter(category='home')
-        data = [{"id": item.id, "title": item.title, "description": item.description, "file": item.file.url if item.file else None, "link": item.link} for item in items]
-        return Response(data)
-
-class FormMediaView(APIView):
+class VideoView(APIView):
     def get(self, request):
-        items = MediaItem.objects.filter(category='form')
-        serializer = MediaItemSerializer(items, many=True)
+        videos = Video.objects.all()
+        serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data)
 
-class ScheduleMediaView(APIView):
+class SpeakerView(APIView):
     def get(self, request):
-        items = MediaItem.objects.filter(category='schedule')
-        serializer = MediaItemSerializer(items, many=True)
+        speakers = Speaker.objects.all()
+        serializer = SpeakerSerializer(speakers, many=True)
         return Response(serializer.data)
 
-class SpeakersMediaView(APIView):
+class ScheduleView(APIView):
     def get(self, request):
-        items = MediaItem.objects.filter(category='speakers')
-        serializer = MediaItemSerializer(items, many=True)
-        return Response(serializer.data)
-
-class StreamMediaView(APIView):
-    def get(self, request):
-        items = MediaItem.objects.filter(category='stream')
-        serializer = MediaItemSerializer(items, many=True)
+        schedules = Schedule.objects.prefetch_related('events').all()
+        serializer = ScheduleSerializer(schedules, many=True)
         return Response(serializer.data)
