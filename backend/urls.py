@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('formapp.urls')),  # Inclui as URLs do app formapp
+    path('api/media/', include('mediaapp.urls')),
 ]
 
 # Suporte para arquivos de mídia

@@ -1,2 +1,5 @@
 django
 djangorestframework
+django-cors-headers
+pandas
+openpyxl
