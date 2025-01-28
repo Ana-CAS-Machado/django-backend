@@ -1,7 +1,7 @@
 from django.db import models
 
 class HomePage(models.Model):
-    img_home = models.URLField()
+    img_home = models.URLField(null=True, blank=True)
     data = models.CharField(max_length=100)
     local = models.CharField(max_length=255)
     adress = models.CharField(max_length=255)
@@ -12,9 +12,12 @@ class HomePage(models.Model):
     txt_3 = models.TextField()
 
 class Video(models.Model):
-    title = models.CharField(max_length=100)
-    video = models.URLField()
-    type = models.CharField(max_length=50)
+    VIDEO_TYPES = [
+    ('embedded', 'Embedded'),
+    ('external', 'External'),
+    ]
+    type = models.CharField(max_length=50, choices=VIDEO_TYPES, null=True, blank=True)
+
 
 class Speaker(models.Model):
     img = models.URLField(blank=True, null=True)

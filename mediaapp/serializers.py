@@ -17,9 +17,11 @@ class SpeakerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EventSerializer(serializers.ModelSerializer):
+    schedule_id = serializers.ReadOnlyField(source='schedule.id')
     class Meta:
         model = Event
-        fields = ['horario', 'eixo', 'mesa', 'componente']
+        fields = ['schedule_id', 'horario', 'eixo', 'mesa', 'componente']
+
 
 class ScheduleSerializer(serializers.ModelSerializer):
     events = EventSerializer(many=True)

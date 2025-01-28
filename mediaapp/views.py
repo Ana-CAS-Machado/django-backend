@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from .models import HomePage, Video, Speaker, Schedule
 from .serializers import HomePageSerializer, VideoSerializer, SpeakerSerializer, ScheduleSerializer
 
@@ -26,3 +27,7 @@ class ScheduleView(APIView):
         schedules = Schedule.objects.prefetch_related('events').all()
         serializer = ScheduleSerializer(schedules, many=True)
         return Response(serializer.data)
+
+class HomePageViewSet(ModelViewSet):
+    queryset = HomePage.objects.all()
+    serializer_class = HomePageSerializer
